@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>COSMIC HUNT | Nirmala Memorial Foundation College</title>
+  <meta name="theme-color" content="#03060F" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/style.css" />
+</head>
+<body class="bg-bg text-text min-h-screen relative overflow-x-hidden landing-page">
+
+  <!-- Fixed Looping Background Video -->
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim"></div>
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-50 px-4 py-3 backdrop-blur-md bg-opacity-70">
+    <div class="max-w-6xl mx-auto flex items-center justify-between glass px-5 py-3">
+      <a href="/" class="flex items-center gap-3 group">
+        <img src="/logo.svg" alt="Cosmic Hunt Logo" class="w-8 h-8 group-hover:rotate-45 transition-transform duration-500" />
+        <span class="font-heading font-bold text-lg tracking-wider text-white">COSMIC HUNT</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#about" class="text-sm font-medium text-text-muted hover:text-primary-light transition-colors uppercase tracking-wider">About</a>
+        <a href="#rules" class="text-sm font-medium text-text-muted hover:text-primary-light transition-colors uppercase tracking-wider">Directives</a>
+        <a href="/leaderboard" class="text-sm font-medium text-text-muted hover:text-primary-light transition-colors uppercase tracking-wider">Leaderboard</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-3">
+        <a href="/login" class="btn-primary text-xs tracking-widest px-4 py-2">
+          TEAM LOGIN
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-16 relative z-10">
+
+    <!-- Hero Section -->
+    <section id="about" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4 md:pt-12">
+      <!-- Left Column: Hero Text -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="glass p-6 md:p-10 space-y-6 frame-offset">
+          <div class="eyebrow flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary-light animate-ping"></span>
+            — TREASURE HUNT // 27 NOV 2026
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-heading font-bold text-white tracking-tight uppercase leading-none">
+            COSMIC<br/><span class="text-primary-light">HUNT</span>
+          </h1>
+
+          <p class="text-xl md:text-2xl text-primary font-medium tracking-wide">
+            Decode the campus. Reach the stars.
+          </p>
+
+          <div class="text-sm text-text-muted border-l-2 border-primary-light/50 pl-3 py-1 font-mono">
+            Nirmala Memorial Foundation College of Commerce & Science<br/>
+            <span class="text-white">27 Nov 2026 | 10:00 AM IST</span>
+          </div>
+
+          <p class="text-base text-text/90 leading-relaxed font-body">
+            Teams of 4 solve cryptic riddles, search physical coordinates across campus for hidden transmission codes, and decrypt sequential waypoints. 6 clues. 30 minutes. Fastest team wins.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <a href="/login" class="btn-primary gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              START MISSION
+            </a>
+            <a href="/leaderboard" class="btn-secondary gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              VIEW LEADERBOARD
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Mission Clock Card -->
+      <div class="lg:col-span-5">
+        <div class="glass p-6 md:p-8 space-y-6 text-center frame-offset">
+          <div class="eyebrow">— T-MINUS EVENT COUNTDOWN</div>
+          
+          <div class="grid grid-cols-4 gap-2 text-center" id="countdown-grid">
+            <div class="bg-bg/60 p-3 rounded border border-border">
+              <div class="font-mono text-2xl md:text-3xl font-bold text-white" id="count-days">--</div>
+              <div class="text-[10px] tracking-widest text-text-muted mt-1">DAYS</div>
+            </div>
+            <div class="bg-bg/60 p-3 rounded border border-border">
+              <div class="font-mono text-2xl md:text-3xl font-bold text-white" id="count-hours">--</div>
+              <div class="text-[10px] tracking-widest text-text-muted mt-1">HOURS</div>
+            </div>
+            <div class="bg-bg/60 p-3 rounded border border-border">
+              <div class="font-mono text-2xl md:text-3xl font-bold text-white" id="count-mins">--</div>
+              <div class="text-[10px] tracking-widest text-text-muted mt-1">MIN</div>
+            </div>
+            <div class="bg-bg/60 p-3 rounded border border-border">
+              <div class="font-mono text-2xl md:text-3xl font-bold text-primary-light" id="count-secs">--</div>
+              <div class="text-[10px] tracking-widest text-text-muted mt-1">SEC</div>
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-center gap-3">
+            <span class="text-xs text-text-muted uppercase tracking-wider font-mono">MISSION STATUS:</span>
+            <span id="event-status-pill" class="status-pill status-waiting">
+              <span class="status-pill-dot"></span>
+              <span id="event-status-text">INITIALIZING</span>
+            </span>
+          </div>
+
+          <div class="text-xs text-text-muted/80 pt-2 border-t border-border font-mono">
+            Reporting time: 09:00 AM IST (1 hour prior to launch)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass p-5 text-center space-y-2">
+        <div class="text-primary-light flex justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+        <div class="font-heading font-bold text-3xl md:text-4xl text-white">4</div>
+        <div class="text-xs tracking-wider uppercase text-text-muted">PLAYERS PER TEAM</div>
+      </div>
+
+      <div class="glass p-5 text-center space-y-2">
+        <div class="text-primary-light flex justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="font-heading font-bold text-3xl md:text-4xl text-white">30</div>
+        <div class="text-xs tracking-wider uppercase text-text-muted">MINUTES OF PLAY</div>
+      </div>
+
+      <div class="glass p-5 text-center space-y-2">
+        <div class="text-primary-light flex justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <div class="font-heading font-bold text-3xl md:text-4xl text-white">6</div>
+        <div class="text-xs tracking-wider uppercase text-text-muted">CLUES TO CRACK</div>
+      </div>
+
+      <div class="glass p-5 text-center space-y-2">
+        <div class="text-primary-light flex justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+        </div>
+        <div class="font-heading font-bold text-3xl md:text-4xl text-white">1</div>
+        <div class="text-xs tracking-wider uppercase text-text-muted">DIFFERENT ROUTE EACH</div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="space-y-6">
+      <div class="text-center space-y-2">
+        <div class="eyebrow">— HOW IT WORKS</div>
+        <h2 class="text-2xl md:text-3xl font-heading font-bold text-white uppercase tracking-wider">
+          FOUR STEPS TO THE TREASURE
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="glass p-6 space-y-3 relative group hover:border-primary-light transition-all">
+          <div class="font-mono text-3xl font-bold text-primary-light/40 group-hover:text-primary-light transition-colors">01</div>
+          <h3 class="font-heading font-bold text-lg text-white uppercase">RECEIVE THE RIDDLE</h3>
+          <p class="text-sm text-text-muted font-body leading-relaxed">
+            Read your current encrypted clue on your smartphone. Every clue describes a physical location on campus.
+          </p>
+        </div>
+
+        <div class="glass p-6 space-y-3 relative group hover:border-primary-light transition-all">
+          <div class="font-mono text-3xl font-bold text-primary-light/40 group-hover:text-primary-light transition-colors">02</div>
+          <h3 class="font-heading font-bold text-lg text-white uppercase">SEARCH THE CAMPUS</h3>
+          <p class="text-sm text-text-muted font-body leading-relaxed">
+            Navigate to the physical landmark with your 4 teammates. Locate the secret alphanumeric sticker or card hidden at the spot.
+          </p>
+        </div>
+
+        <div class="glass p-6 space-y-3 relative group hover:border-primary-light transition-all">
+          <div class="font-mono text-3xl font-bold text-primary-light/40 group-hover:text-primary-light transition-colors">03</div>
+          <h3 class="font-heading font-bold text-lg text-white uppercase">ENTER THE CODE</h3>
+          <p class="text-sm text-text-muted font-body leading-relaxed">
+            Type the secret code into your team's live game console and press Submit. Hyphens and spaces are handled automatically.
+          </p>
+        </div>
+
+        <div class="glass p-6 space-y-3 relative group hover:border-primary-light transition-all">
+          <div class="font-mono text-3xl font-bold text-primary-light/40 group-hover:text-primary-light transition-colors">04</div>
+          <h3 class="font-heading font-bold text-lg text-white uppercase">UNLOCK NEXT CLUE</h3>
+          <p class="text-sm text-text-muted font-body leading-relaxed">
+            Instant verification unlocks your next waypoint. Complete all 6 clues within 30 minutes to record your final mission time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wave-Line Divider -->
+    <div class="wave-divider">
+      <div class="wave-divider-icon">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
+      </div>
+    </div>
+
+    <!-- Official Rules Section (Directives) -->
+    <section id="rules" class="space-y-6">
+      <div class="glass p-6 md:p-10 space-y-6 frame-offset">
+        <div class="eyebrow">— THE RULES</div>
+        <h2 class="text-2xl md:text-3xl font-heading font-bold text-white uppercase tracking-wider">
+          MISSION DIRECTIVES
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 pt-2">
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">01</span>
+            <p class="text-sm text-text font-body">Each team has exactly 4 players.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">02</span>
+            <p class="text-sm text-text font-body">The game is played inside the college premises only.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">03</span>
+            <p class="text-sm text-text font-body">Teams must report 1 hour before their game starts.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">04</span>
+            <p class="text-sm text-text font-body">Each team gets 30 minutes of play time.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">05</span>
+            <p class="text-sm text-text font-body">Phones used for outside help, or any unfair means, lead to disqualification. (A phone may be used only to open this website.)</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">06</span>
+            <p class="text-sm text-text font-body">No cross-teaming and no outside help.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">07</span>
+            <p class="text-sm text-text font-body">Cheating, disrespect or misbehaviour leads to disqualification.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">08</span>
+            <p class="text-sm text-text font-body">Match timing is not changed once the team has started.</p>
+          </div>
+          <div class="flex items-start gap-3 md:col-span-2">
+            <span class="font-mono text-xs font-bold px-2 py-1 bg-border rounded text-primary-light shrink-0">09</span>
+            <p class="text-sm text-text font-body font-semibold text-white">The organizers' decision is final.</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded bg-bg/50 border border-border text-xs text-text-muted font-mono">
+          Note: System automatically records all code attempts with precision server timestamps.
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Strip -->
+    <section class="glass p-8 text-center space-y-4">
+      <h2 class="text-2xl md:text-3xl font-heading font-bold text-white uppercase tracking-wider">
+        READY TO LAUNCH?
+      </h2>
+      <p class="text-text-muted max-w-xl mx-auto text-sm">
+        Report to the mission desk, collect your team access slip, and log in to begin.
+      </p>
+      <div>
+        <a href="/login" class="btn-primary px-8">
+          START MISSION
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Glass Footer -->
+  <footer class="mt-16 border-t border-border/60 py-10 px-4 glass relative z-10 text-center space-y-4">
+    <div class="flex items-center justify-center gap-3">
+      <img src="/logo.svg" alt="Cosmic Hunt Logo" class="w-6 h-6" />
+      <span class="font-heading font-bold text-white tracking-widest">COSMIC HUNT</span>
+    </div>
+    <div class="text-xs text-text-muted font-body">
+      Nirmala Memorial Foundation College of Commerce & Science
+    </div>
+    <div class="text-xs text-primary-light/80 font-mono tracking-wider">
+      Decode the campus. Reach the stars.
+    </div>
+  </footer>
+
+  <script type="module" src="/src/js/landing.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Team Login | COSMIC HUNT</title>
+  <meta name="theme-color" content="#03060F" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/style.css" />
+</head>
+<body class="bg-bg text-text min-h-screen flex flex-col justify-between starfield-bg p-4 relative">
+
+  <!-- Starfield Layer -->
+  <div class="starfield-container" aria-hidden="true">
+    <div class="stars-layer-1"></div>
+    <div class="stars-layer-2"></div>
+    <div class="stars-layer-3"></div>
+  </div>
+
+  <!-- Top Logo Bar -->
+  <header class="w-full max-w-md mx-auto pt-4 flex items-center justify-between relative z-10">
+    <a href="/" class="flex items-center gap-2 text-text-muted hover:text-white transition-colors">
+      <img src="/logo.svg" alt="Cosmic Hunt" class="w-6 h-6" />
+      <span class="font-heading font-bold tracking-wider text-sm">COSMIC HUNT</span>
+    </a>
+    <a href="/leaderboard" class="text-xs font-mono text-primary-light hover:underline">
+      LEADERBOARD &rarr;
+    </a>
+  </header>
+
+  <!-- Login Card -->
+  <main class="w-full max-w-md mx-auto my-auto py-6 relative z-10">
+    <div class="bg-panel-solid border border-border p-6 md:p-8 space-y-6 frame-offset rounded-sm" id="login-card">
+      <div class="space-y-2">
+        <div class="eyebrow flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary-light"></span>
+          — MISSION LOGIN
+        </div>
+        <h1 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">
+          ENTER YOUR TEAM CODE
+        </h1>
+      </div>
+
+      <!-- Helper box -->
+      <div class="flex items-start gap-3 p-3 bg-bg/80 border border-border/80 rounded-sm text-xs text-text-muted">
+        <svg class="w-4 h-4 text-primary-light shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+        <span>Type the 6-character access code printed on your official team slip.</span>
+      </div>
+
+      <!-- 6-character Code Entry -->
+      <div class="space-y-2">
+        <div class="relative">
+          <!-- Invisible real input that captures mobile keyboard and paste -->
+          <input
+            id="code-input"
+            type="text"
+            maxlength="6"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            inputmode="text"
+            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+            aria-label="Enter 6-character team access code"
+          />
+
+          <!-- 6 Visual Boxes -->
+          <div class="grid grid-cols-6 gap-2" id="boxes-container">
+            <div class="code-box h-14 bg-bg border border-border flex items-center justify-center font-mono text-2xl font-bold text-white transition-all"></div>
+            <div class="code-box h-14 bg-bg border border-border flex items-center justify-center font-mono text-2xl font-bold text-white transition-all"></div>
+            <div class="code-box h-14 bg-bg border border-border flex items-center justify-center font-mono text-2xl font-bold text-white transition-all"></div>
+            <div class="code-box h-14 bg-bg border border-border flex items-center justify-center font-mono text-2xl font-bold text-white transition-all"></div>
+            <div class="code-box h-14 bg-bg border border-border flex items-center justify-center font-mono text-2xl font-bold text-white transition-all"></div>
+            <div class="code-box h-14 bg-bg border border-border flex items-center justify-center font-mono text-2xl font-bold text-white transition-all"></div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span id="char-counter" class="text-text-muted">0 / 6</span>
+          <span id="error-message" class="text-danger font-medium hidden"></span>
+        </div>
+      </div>
+
+      <!-- Launch Mission Button -->
+      <button id="btn-submit" class="btn-primary w-full gap-2" disabled>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span>LAUNCH MISSION</span>
+      </button>
+
+      <!-- Collapsible Official Rules Panel -->
+      <div class="border border-border rounded-sm overflow-hidden text-xs">
+        <button id="toggle-rules" class="w-full p-3 bg-bg flex items-center justify-between text-text-muted hover:text-white transition-colors">
+          <span class="font-mono uppercase font-bold tracking-wider">OFFICIAL RULES (9)</span>
+          <svg id="rules-chevron" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="rules-content" class="hidden p-4 space-y-2 bg-panel-solid/50 text-text/80 font-body border-t border-border">
+          <ol class="list-decimal list-inside space-y-1">
+            <li>Each team has exactly 4 players.</li>
+            <li>The game is played inside the college premises only.</li>
+            <li>Teams must report 1 hour before game starts.</li>
+            <li>Each team gets 30 minutes of play time.</li>
+            <li>Phones used for outside help lead to disqualification.</li>
+            <li>No cross-teaming and no outside help.</li>
+            <li>Cheating or misbehaviour leads to disqualification.</li>
+            <li>Match timing is not changed once started.</li>
+            <li>The organizers' decision is final.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Device Switch Confirmation Modal -->
+  <div id="conflict-modal" class="fixed inset-0 z-50 bg-bg/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-panel-solid border border-border p-6 max-w-sm w-full space-y-4 rounded frame-offset">
+      <div class="flex items-center gap-3 text-warn">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        <h3 class="font-heading font-bold text-white uppercase text-lg">Active Device Detected</h3>
+      </div>
+      <p class="text-sm text-text-muted">
+        This team is currently signed in on another device. Signing in here will sign out the other one.
+      </p>
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button id="btn-cancel-conflict" class="btn-secondary text-xs px-3 py-2">CANCEL</button>
+        <button id="btn-force-conflict" class="btn-primary text-xs px-4 py-2">SIGN IN HERE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full max-w-md mx-auto pb-4 text-center text-[11px] text-text-muted/60 font-mono relative z-10">
+    Nirmala Memorial Foundation College of Commerce & Science
+  </footer>
+
+  <script type="module" src="/src/js/login.js"></script>
+</body>
+</html>
+

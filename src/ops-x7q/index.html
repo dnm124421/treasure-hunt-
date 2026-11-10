@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Admin Command Center | COSMIC HUNT</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#03060F" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/style.css" />
+</head>
+<body class="bg-bg text-text min-h-screen font-body antialiased selection:bg-primary selection:text-bg">
+
+  <!-- ADMIN LOGIN VIEW (SHOWN IF NOT SIGNED IN) -->
+  <div id="view-login" class="min-h-screen flex items-center justify-center p-4 starfield-bg relative">
+    <div class="starfield-container" aria-hidden="true">
+      <div class="stars-layer-1"></div>
+      <div class="stars-layer-2"></div>
+    </div>
+
+    <div class="bg-panel-solid border border-border p-8 max-w-sm w-full space-y-6 frame-offset rounded relative z-10">
+      <div class="text-center space-y-2">
+        <img src="/logo.svg" alt="Cosmic Hunt" class="w-10 h-10 mx-auto" />
+        <div class="eyebrow">— SECURITY CLEARANCE REQUIRED</div>
+        <h1 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">COMMAND CENTER</h1>
+        <p class="text-xs text-text-muted font-mono">Nirmala Memorial Foundation College</p>
+      </div>
+
+      <form id="form-login" class="space-y-4">
+        <div class="space-y-1">
+          <label class="block text-xs font-mono text-text-muted uppercase">Admin Email</label>
+          <input
+            id="admin-email"
+            type="email"
+            required
+            autocomplete="username"
+            placeholder="admin@college.edu"
+            class="w-full bg-bg border border-border h-11 px-3 text-sm font-mono text-white rounded focus:border-primary focus:outline-none"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-xs font-mono text-text-muted uppercase">Password</label>
+          <div class="relative">
+            <input
+              id="admin-password"
+              type="password"
+              required
+              autocomplete="current-password"
+              placeholder="••••••••••••"
+              class="w-full bg-bg border border-border h-11 px-3 pr-10 text-sm font-mono text-white rounded focus:border-primary focus:outline-none"
+            />
+            <button type="button" id="btn-toggle-pwd" class="absolute right-3 top-3 text-text-muted hover:text-white" aria-label="Toggle Password Visibility">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="login-error" class="text-xs font-mono text-danger hidden"></div>
+
+        <button type="submit" id="btn-sign-in" class="btn-primary w-full h-11 text-sm tracking-wider">
+          AUTHENTICATE
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN LIVE DASHBOARD (SHOWN WHEN AUTHENTICATED) -->
+  <div id="view-dashboard" class="min-h-screen flex flex-col md:flex-row hidden">
+
+    <!-- Left Navigation Sidebar -->
+    <aside class="w-full md:w-64 bg-panel-solid border-r border-border flex flex-col justify-between shrink-0">
+      <div class="p-4 space-y-6">
+        <div class="flex items-center gap-3">
+          <img src="/logo.svg" alt="Cosmic Hunt" class="w-7 h-7" />
+          <div>
+            <div class="font-heading font-bold text-white tracking-wider text-sm uppercase">COSMIC HUNT</div>
+            <div class="text-[10px] text-primary-light font-mono">MISSION CONTROL</div>
+          </div>
+        </div>
+
+        <nav class="space-y-1 font-mono text-xs">
+          <a href="/ops-x7q/" class="flex items-center gap-2.5 px-3 py-2.5 bg-primary/20 text-white rounded font-bold border-l-2 border-primary">
+            <svg class="w-4 h-4 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            LIVE COMMAND
+          </a>
+          <a href="/ops-x7q/manage" class="flex items-center gap-2.5 px-3 py-2.5 text-text-muted hover:text-white hover:bg-bg/60 rounded transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            MANAGE DATA
+          </a>
+          <a href="/leaderboard" target="_blank" class="flex items-center gap-2.5 px-3 py-2.5 text-text-muted hover:text-white hover:bg-bg/60 rounded transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            PUBLIC BOARD ↗
+          </a>
+        </nav>
+      </div>
+
+      <div class="p-4 border-t border-border space-y-3 font-mono text-xs">
+        <div class="text-[11px] text-text-muted truncate" id="admin-user-display">dnm124421@gmail.com</div>
+        <button id="btn-logout" class="btn-secondary w-full h-9 text-xs">
+          LOGOUT
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Live Command Area -->
+    <div class="flex-1 flex flex-col overflow-y-auto">
+
+      <!-- Top Strip Control Bar -->
+      <header class="bg-panel-solid/90 border-b border-border px-6 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30">
+        <div class="flex items-center gap-3">
+          <span class="font-heading font-bold text-white text-base uppercase">MISSION CONTROL</span>
+          <span id="badge-event-status" class="status-pill status-waiting">
+            <span class="status-pill-dot"></span>
+            SETUP
+          </span>
+          <span id="live-server-clock" class="text-xs font-mono text-text-muted hidden sm:inline">--:--:--</span>
+        </div>
+
+        <!-- Global Action Controls -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="btn-pause-all" class="btn-secondary text-xs h-9 px-3 gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/></svg>
+            PAUSE ALL
+          </button>
+          <button id="btn-resume-all" class="btn-secondary text-xs h-9 px-3 gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+            RESUME ALL
+          </button>
+          <button id="btn-toggle-reveal" class="btn-secondary text-xs h-9 px-3 gap-1.5 border-primary-light text-primary-light">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span id="reveal-toggle-label">LEADERBOARD: HIDDEN</span>
+          </button>
+          <button id="btn-stop-mission" class="btn-danger text-xs h-9 px-3 gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+            STOP MISSION
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Body Content -->
+      <main class="p-6 space-y-6">
+
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-panel-solid border border-border p-4 rounded text-center">
+            <div id="stat-teams-total" class="font-mono text-3xl font-bold text-white">6</div>
+            <div class="text-[10px] uppercase font-mono tracking-wider text-text-muted mt-1">TEAMS REGISTERED</div>
+          </div>
+          <div class="bg-panel-solid border border-border p-4 rounded text-center">
+            <div id="stat-teams-playing" class="font-mono text-3xl font-bold text-primary-light">0</div>
+            <div class="text-[10px] uppercase font-mono tracking-wider text-text-muted mt-1">ACTIVE / PLAYING</div>
+          </div>
+          <div class="bg-panel-solid border border-border p-4 rounded text-center">
+            <div id="stat-teams-completed" class="font-mono text-3xl font-bold text-success">0</div>
+            <div class="text-[10px] uppercase font-mono tracking-wider text-text-muted mt-1">COMPLETED</div>
+          </div>
+          <div class="bg-panel-solid border border-border p-4 rounded text-center">
+            <div id="stat-teams-dq" class="font-mono text-3xl font-bold text-danger">0</div>
+            <div class="text-[10px] uppercase font-mono tracking-wider text-text-muted mt-1">DISQUALIFIED</div>
+          </div>
+        </div>
+
+        <!-- Live Teams Monitoring Table -->
+        <div class="bg-panel-solid border border-border rounded overflow-hidden frame-offset">
+          <div class="p-4 border-b border-border flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h2 class="font-heading font-bold text-white uppercase text-base tracking-wider">LIVE TEAMS STATUS</h2>
+              <p class="text-xs text-text-muted font-mono">Real-time synchronized countdowns & clue progression</p>
+            </div>
+            <button id="btn-start-all-waiting" class="btn-primary text-xs h-8 px-3">
+              START ALL WAITING
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left font-mono text-xs border-collapse">
+              <thead>
+                <tr class="bg-bg/90 border-b border-border text-[11px] text-text-muted uppercase">
+                  <th class="py-3 px-4">TEAM / STATUS</th>
+                  <th class="py-3 px-4">PROGRESS</th>
+                  <th class="py-3 px-4 text-center">TIME LEFT</th>
+                  <th class="py-3 px-4 text-center">WRONG</th>
+                  <th class="py-3 px-4 text-center">LAST ACTIVE</th>
+                  <th class="py-3 px-4 text-right">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="live-teams-tbody" class="divide-y divide-border/60">
+                <!-- Dynamically populated live team rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Lower Panels (3 columns: Clue Vault, Route Matrix, Live Attempts Feed) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- Panel 1: Clue Vault -->
+          <div class="bg-panel-solid border border-border p-4 rounded space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-heading font-bold text-white text-sm uppercase tracking-wider">CLUE VAULT</h3>
+              <button id="btn-toggle-codes" class="text-[11px] font-mono text-primary-light hover:underline">
+                SHOW CODES
+              </button>
+            </div>
+            <div id="vault-list" class="space-y-2 max-h-72 overflow-y-auto pr-1">
+              <!-- Clues loaded dynamically -->
+            </div>
+          </div>
+
+          <!-- Panel 2: Route Matrix -->
+          <div class="bg-panel-solid border border-border p-4 rounded space-y-3">
+            <h3 class="font-heading font-bold text-white text-sm uppercase tracking-wider">ROUTE MATRIX</h3>
+            <div id="route-matrix-list" class="space-y-2 max-h-72 overflow-y-auto pr-1">
+              <!-- Route paths loaded dynamically -->
+            </div>
+          </div>
+
+          <!-- Panel 3: Live Attempt Feed -->
+          <div class="bg-panel-solid border border-border p-4 rounded space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-heading font-bold text-white text-sm uppercase tracking-wider">LIVE ATTEMPTS FEED</h3>
+              <button id="btn-export-attempts-csv" class="text-[11px] font-mono text-primary-light hover:underline">
+                EXPORT CSV
+              </button>
+            </div>
+            <div id="live-attempts-list" class="space-y-1.5 max-h-72 overflow-y-auto pr-1 text-xs font-mono">
+              <!-- Recent 40 attempts loaded dynamically -->
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ACTION MODALS -->
+
+  <!-- Time Adjustment Modal -->
+  <div id="modal-time" class="fixed inset-0 z-50 bg-bg/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-panel-solid border border-border p-6 max-w-sm w-full space-y-4 rounded frame-offset">
+      <h3 id="modal-time-title" class="font-heading font-bold text-white uppercase text-base">ADJUST TIME</h3>
+      <input type="hidden" id="modal-time-team-id" />
+      <div class="space-y-2 text-xs font-mono">
+        <label class="block text-text-muted">MINUTES</label>
+        <input id="modal-time-minutes" type="number" value="2" min="1" max="30" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+        <label class="block text-text-muted pt-2">REASON (AUDIT LOG)</label>
+        <input id="modal-time-reason" type="text" placeholder="e.g. Broken physical clue, venue issue" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-cancel-time" class="btn-secondary text-xs px-3 py-1.5">CANCEL</button>
+        <button id="btn-confirm-add-time" class="btn-primary text-xs px-3 py-1.5">+ ADD TIME</button>
+        <button id="btn-confirm-remove-time" class="btn-danger text-xs px-3 py-1.5">- REMOVE TIME</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Penalty Modal -->
+  <div id="modal-penalty" class="fixed inset-0 z-50 bg-bg/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-panel-solid border border-border p-6 max-w-sm w-full space-y-4 rounded frame-offset">
+      <h3 class="font-heading font-bold text-white uppercase text-base text-warn">APPLY TIME PENALTY</h3>
+      <input type="hidden" id="modal-penalty-team-id" />
+      <div class="space-y-2 text-xs font-mono">
+        <label class="block text-text-muted">PENALTY SECONDS (COUNTS TOWARD RANK TIME)</label>
+        <input id="modal-penalty-seconds" type="number" value="30" min="5" max="300" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+        <label class="block text-text-muted pt-2">REASON</label>
+        <input id="modal-penalty-reason" type="text" placeholder="e.g. Outside corridor restriction violation" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-cancel-penalty" class="btn-secondary text-xs px-3 py-1.5">CANCEL</button>
+        <button id="btn-confirm-penalty" class="btn-danger text-xs px-3 py-1.5">APPLY PENALTY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal (Generic for Dangerous Actions) -->
+  <div id="modal-confirm" class="fixed inset-0 z-50 bg-bg/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-panel-solid border border-border p-6 max-w-sm w-full space-y-4 rounded frame-offset">
+      <h3 id="modal-confirm-title" class="font-heading font-bold text-white uppercase text-base">CONFIRM ACTION</h3>
+      <p id="modal-confirm-message" class="text-sm text-text-muted"></p>
+      <div id="modal-confirm-input-wrap" class="hidden space-y-1">
+        <label class="text-xs font-mono text-danger">Type "RESET" to confirm:</label>
+        <input id="modal-confirm-input" type="text" class="w-full bg-bg border border-danger h-9 px-3 font-mono text-sm uppercase text-white rounded" />
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-modal-cancel" class="btn-secondary text-xs px-3 py-1.5">CANCEL</button>
+        <button id="btn-modal-proceed" class="btn-primary text-xs px-4 py-1.5">PROCEED</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <script type="module" src="/src/js/admin/live.js"></script>
+</body>
+</html>
+

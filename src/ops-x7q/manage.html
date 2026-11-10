@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Manage Data | COSMIC HUNT</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#03060F" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/style.css" />
+  <style>
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-area, #print-area * {
+        visibility: visible;
+      }
+      #print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .slip-card {
+        page-break-inside: avoid;
+        border: 2px dashed #333 !important;
+        color: #000 !important;
+        padding: 20px !important;
+        margin-bottom: 24px !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-bg text-text min-h-screen font-body antialiased selection:bg-primary selection:text-bg">
+
+  <div class="min-h-screen flex flex-col md:flex-row">
+
+    <!-- Left Navigation Sidebar -->
+    <aside class="w-full md:w-64 bg-panel-solid border-r border-border flex flex-col justify-between shrink-0">
+      <div class="p-4 space-y-6">
+        <div class="flex items-center gap-3">
+          <img src="/logo.svg" alt="Cosmic Hunt" class="w-7 h-7" />
+          <div>
+            <div class="font-heading font-bold text-white tracking-wider text-sm uppercase">COSMIC HUNT</div>
+            <div class="text-[10px] text-primary-light font-mono">MANAGEMENT CONSOLE</div>
+          </div>
+        </div>
+
+        <nav class="space-y-1 font-mono text-xs">
+          <a href="/ops-x7q/" class="flex items-center gap-2.5 px-3 py-2.5 text-text-muted hover:text-white hover:bg-bg/60 rounded transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            LIVE COMMAND
+          </a>
+          <a href="/ops-x7q/manage" class="flex items-center gap-2.5 px-3 py-2.5 bg-primary/20 text-white rounded font-bold border-l-2 border-primary">
+            <svg class="w-4 h-4 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            MANAGE DATA
+          </a>
+          <a href="/leaderboard" target="_blank" class="flex items-center gap-2.5 px-3 py-2.5 text-text-muted hover:text-white hover:bg-bg/60 rounded transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            PUBLIC BOARD ↗
+          </a>
+        </nav>
+      </div>
+
+      <div class="p-4 border-t border-border space-y-3 font-mono text-xs">
+        <div class="text-[11px] text-text-muted truncate">dnm124421@gmail.com</div>
+        <button id="btn-logout" class="btn-secondary w-full h-9 text-xs">LOGOUT</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col overflow-y-auto">
+
+      <!-- Top Strip with Tabs -->
+      <header class="bg-panel-solid/90 border-b border-border px-6 py-2.5 sticky top-0 z-30 flex items-center justify-between flex-wrap gap-4">
+        <div class="flex items-center gap-2 overflow-x-auto text-xs font-mono" id="tabs-nav">
+          <button class="tab-btn active px-3 py-2 border-b-2 border-primary text-white font-bold" data-tab="teams">TEAMS</button>
+          <button class="tab-btn px-3 py-2 border-b-2 border-transparent text-text-muted hover:text-white" data-tab="clues">CLUES</button>
+          <button class="tab-btn px-3 py-2 border-b-2 border-transparent text-text-muted hover:text-white" data-tab="assignment">ASSIGNMENT</button>
+          <button class="tab-btn px-3 py-2 border-b-2 border-transparent text-text-muted hover:text-white" data-tab="settings">SETTINGS</button>
+          <button class="tab-btn px-3 py-2 border-b-2 border-transparent text-text-muted hover:text-white" data-tab="logs">LOGS & EXPORT</button>
+          <button class="tab-btn px-3 py-2 border-b-2 border-transparent text-danger hover:text-red-400" data-tab="danger">DANGER ZONE</button>
+        </div>
+      </header>
+
+      <!-- Tab Contents -->
+      <main class="p-6">
+
+        <!-- TAB 1: TEAMS -->
+        <section id="tab-teams" class="tab-content space-y-6">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 class="font-heading font-bold text-white text-lg uppercase tracking-wider">TEAMS MANAGEMENT</h2>
+              <p class="text-xs text-text-muted font-mono">Configure team rosters, credentials, and printable mission slips</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="btn-print-slips" class="btn-secondary text-xs h-9 px-3 gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                PRINT ALL SLIPS
+              </button>
+              <button id="btn-add-team" class="btn-primary text-xs h-9 px-4 gap-1.5">
+                + ADD TEAM
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-panel-solid border border-border rounded overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-mono text-xs border-collapse">
+                <thead>
+                  <tr class="bg-bg/90 border-b border-border text-[11px] text-text-muted uppercase">
+                    <th class="py-3 px-4">TEAM NAME</th>
+                    <th class="py-3 px-4">MEMBERS (4)</th>
+                    <th class="py-3 px-4 text-center">ACCESS CODE</th>
+                    <th class="py-3 px-4 text-center">STATUS</th>
+                    <th class="py-3 px-4 text-right">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="teams-tbody" class="divide-y divide-border/60">
+                  <!-- Dynamically populated teams -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: CLUES -->
+        <section id="tab-clues" class="tab-content space-y-6 hidden">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 class="font-heading font-bold text-white text-lg uppercase tracking-wider">CLUE POOL & RIDDLES</h2>
+              <p class="text-xs text-text-muted font-mono">Manage campus riddles, physical locations, and secret codes</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="btn-import-clues" class="btn-secondary text-xs h-9 px-3 gap-1.5">
+                IMPORT JSON/CSV
+              </button>
+              <button id="btn-add-clue" class="btn-primary text-xs h-9 px-4 gap-1.5">
+                + ADD CLUE
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-panel-solid border border-border rounded overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-mono text-xs border-collapse">
+                <thead>
+                  <tr class="bg-bg/90 border-b border-border text-[11px] text-text-muted uppercase">
+                    <th class="py-3 px-4">TITLE (ADMIN LABEL)</th>
+                    <th class="py-3 px-4">RIDDLE TEXT (STUDENTS SEE)</th>
+                    <th class="py-3 px-4 text-center">SECRET CODE</th>
+                    <th class="py-3 px-4">LOCATION NOTE (PRIVATE)</th>
+                    <th class="py-3 px-4 text-right">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="clues-tbody" class="divide-y divide-border/60">
+                  <!-- Dynamically populated clues -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: ASSIGNMENT -->
+        <section id="tab-assignment" class="tab-content space-y-6 hidden">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 class="font-heading font-bold text-white text-lg uppercase tracking-wider">TEAM PATH ASSIGNMENT</h2>
+              <p class="text-xs text-text-muted font-mono">Order of 6 clues per team. Use auto-shuffle to guarantee different routes.</p>
+            </div>
+            <button id="btn-auto-shuffle" class="btn-primary text-xs h-9 px-4 gap-1.5">
+              AUTO-SHUFFLE ALL (ROTATION ALGORITHM)
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="assignment-cards">
+            <!-- Dynamically populated per-team clue order cards -->
+          </div>
+        </section>
+
+        <!-- TAB 4: SETTINGS -->
+        <section id="tab-settings" class="tab-content space-y-6 hidden">
+          <div>
+            <h2 class="font-heading font-bold text-white text-lg uppercase tracking-wider">EVENT CONFIGURATION</h2>
+            <p class="text-xs text-text-muted font-mono">Control event title, duration, college branding, and anti-spam limits</p>
+          </div>
+
+          <form id="form-settings" class="bg-panel-solid border border-border p-6 rounded space-y-4 max-w-2xl font-mono text-xs">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="block text-text-muted">EVENT NAME</label>
+                <input id="setting-name" type="text" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-text-muted">COLLEGE NAME</label>
+                <input id="setting-college" type="text" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+              </div>
+              <div class="space-y-1 md:col-span-2">
+                <label class="block text-text-muted">TAGLINE</label>
+                <input id="setting-tagline" type="text" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-text-muted">DATE & TIME DISPLAY</label>
+                <input id="setting-date-text" type="text" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-text-muted">EVENT ISO TIMESTAMP</label>
+                <input id="setting-date-iso" type="text" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-text-muted">GAME DURATION (MINUTES)</label>
+                <input id="setting-duration-min" type="number" value="30" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+              </div>
+              <div class="space-y-1">
+                <label class="block text-text-muted">CLUES PER TEAM</label>
+                <input id="setting-clues-per-team" type="number" value="6" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-border space-y-3">
+              <h4 class="font-bold text-white text-xs uppercase">Anti-Spam Lockout Rules</h4>
+              <div class="grid grid-cols-3 gap-4">
+                <div class="space-y-1">
+                  <label class="block text-text-muted">MAX WRONG TRIES</label>
+                  <input id="setting-lockout-wrong" type="number" value="5" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-text-muted">WINDOW (SECONDS)</label>
+                  <input id="setting-lockout-window" type="number" value="60" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-text-muted">LOCK DURATION (S)</label>
+                  <input id="setting-lockout-lock" type="number" value="30" class="w-full bg-bg border border-border h-10 px-3 rounded text-white" />
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 flex items-center justify-end">
+              <button type="submit" class="btn-primary text-xs px-6 h-10">SAVE SETTINGS</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- TAB 5: LOGS & EXPORT -->
+        <section id="tab-logs" class="tab-content space-y-6 hidden">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 class="font-heading font-bold text-white text-lg uppercase tracking-wider">AUDIT LOGS & CSV EXPORT</h2>
+              <p class="text-xs text-text-muted font-mono">Download official spreadsheets for prizes and organizers review</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="btn-export-results" class="btn-primary text-xs h-9 px-4 gap-1.5">EXPORT RESULTS (CSV)</button>
+              <button id="btn-export-attempts" class="btn-secondary text-xs h-9 px-3 gap-1.5">EXPORT ATTEMPTS (CSV)</button>
+              <button id="btn-export-admin-log" class="btn-secondary text-xs h-9 px-3 gap-1.5">EXPORT ADMIN AUDIT (CSV)</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-panel-solid border border-border p-4 rounded space-y-3">
+              <h3 class="font-heading font-bold text-white text-sm uppercase">ADMIN AUDIT LOG</h3>
+              <div id="admin-audit-list" class="space-y-1.5 max-h-96 overflow-y-auto pr-1 text-xs font-mono"></div>
+            </div>
+            <div class="bg-panel-solid border border-border p-4 rounded space-y-3">
+              <h3 class="font-heading font-bold text-white text-sm uppercase">TEAM ATTEMPTS HISTORY</h3>
+              <div id="full-attempts-list" class="space-y-1.5 max-h-96 overflow-y-auto pr-1 text-xs font-mono"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 6: DANGER ZONE -->
+        <section id="tab-danger" class="tab-content space-y-6 hidden">
+          <div>
+            <h2 class="font-heading font-bold text-danger text-lg uppercase tracking-wider">DANGER ZONE</h2>
+            <p class="text-xs text-text-muted font-mono">Irreversible administrative reset procedures. Requires typed confirmation.</p>
+          </div>
+
+          <div class="space-y-4 max-w-xl">
+            <div class="p-4 bg-danger/10 border border-danger/40 rounded space-y-3">
+              <h3 class="font-bold text-white text-sm">LOAD SAMPLE DATA</h3>
+              <p class="text-xs text-text-muted">
+                Wipes all current teams, clues, assignments and logs, and resets to the default 6 sample teams and 6 sample campus clues.
+              </p>
+              <button id="btn-load-sample" class="btn-danger text-xs px-4 h-9">LOAD SAMPLE DATA</button>
+            </div>
+
+            <div class="p-4 bg-danger/10 border border-danger/40 rounded space-y-3">
+              <h3 class="font-bold text-white text-sm">RESET EVENT (CLEAR SCORES)</h3>
+              <p class="text-xs text-text-muted">
+                Clears all team timers, clues progress, and attempts, returning all teams to Waiting state. Keeps teams, clues, and assignments intact.
+              </p>
+              <button id="btn-reset-event" class="btn-danger text-xs px-4 h-9">RESET EVENT</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Print Slips Hidden Container -->
+  <div id="print-area" class="hidden p-8 space-y-8"></div>
+
+  <!-- Team Edit Modal -->
+  <div id="modal-team" class="fixed inset-0 z-50 bg-bg/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-panel-solid border border-border p-6 max-w-md w-full space-y-4 rounded frame-offset font-mono text-xs">
+      <h3 id="modal-team-title" class="font-heading font-bold text-white uppercase text-base">EDIT TEAM</h3>
+      <input type="hidden" id="edit-team-id" />
+      <div class="space-y-3">
+        <div>
+          <label class="block text-text-muted">TEAM NAME</label>
+          <input id="edit-team-name" type="text" class="w-full bg-bg border border-border h-9 px-3 rounded text-white" />
+        </div>
+        <div>
+          <label class="block text-text-muted">MEMBERS (EXACTLY 4)</label>
+          <div class="space-y-1.5 pt-1">
+            <input id="edit-member-1" type="text" placeholder="Player 1" class="w-full bg-bg border border-border h-8 px-2.5 rounded text-white" />
+            <input id="edit-member-2" type="text" placeholder="Player 2" class="w-full bg-bg border border-border h-8 px-2.5 rounded text-white" />
+            <input id="edit-member-3" type="text" placeholder="Player 3" class="w-full bg-bg border border-border h-8 px-2.5 rounded text-white" />
+            <input id="edit-member-4" type="text" placeholder="Player 4" class="w-full bg-bg border border-border h-8 px-2.5 rounded text-white" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-text-muted">ACCESS CODE (6 CHARS)</label>
+          <input id="edit-team-code" type="text" maxlength="6" class="w-full bg-bg border border-border h-9 px-3 rounded text-white uppercase font-bold" />
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-cancel-team" class="btn-secondary text-xs px-3 py-1.5">CANCEL</button>
+        <button id="btn-save-team" class="btn-primary text-xs px-4 py-1.5">SAVE TEAM</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clue Edit Modal -->
+  <div id="modal-clue" class="fixed inset-0 z-50 bg-bg/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-panel-solid border border-border p-6 max-w-lg w-full space-y-4 rounded frame-offset font-mono text-xs">
+      <h3 id="modal-clue-title" class="font-heading font-bold text-white uppercase text-base">EDIT CLUE</h3>
+      <input type="hidden" id="edit-clue-id" />
+      <div class="space-y-3">
+        <div>
+          <label class="block text-text-muted">TITLE (ADMIN LABEL)</label>
+          <input id="edit-clue-title" type="text" placeholder="e.g. Notice Board Clue" class="w-full bg-bg border border-border h-9 px-3 rounded text-white" />
+        </div>
+        <div>
+          <label class="block text-text-muted">RIDDLE TEXT (STUDENTS READ THIS)</label>
+          <textarea id="edit-clue-text" rows="3" class="w-full bg-bg border border-border p-2.5 rounded text-white font-body text-sm"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-text-muted">SECRET CODE (e.g. YEL-7N4W)</label>
+            <input id="edit-clue-code" type="text" placeholder="XXX-XXXX" class="w-full bg-bg border border-border h-9 px-3 rounded text-white uppercase font-bold" />
+          </div>
+          <div>
+            <label class="block text-text-muted">GENERATE CODE</label>
+            <button type="button" id="btn-gen-code" class="btn-secondary w-full h-9 text-xs">GENERATE RANDOM</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-text-muted">LOCATION NOTE (PRIVATE ADMIN NOTE)</label>
+          <input id="edit-clue-location" type="text" placeholder="Where the sticker is hidden" class="w-full bg-bg border border-border h-9 px-3 rounded text-white" />
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-cancel-clue" class="btn-secondary text-xs px-3 py-1.5">CANCEL</button>
+        <button id="btn-save-clue" class="btn-primary text-xs px-4 py-1.5">SAVE CLUE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <script type="module" src="/src/js/admin/manage.js"></script>
+</body>
+</html>
+

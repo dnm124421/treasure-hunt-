@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mission Console | COSMIC HUNT</title>
+  <meta name="theme-color" content="#03060F" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/style.css" />
+  <style>
+    /* Mobile-specific ergonomics */
+    body {
+      overscroll-behavior: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    input {
+      -webkit-user-select: auto;
+      user-select: auto;
+    }
+  </style>
+</head>
+<body class="bg-bg text-text min-h-screen flex flex-col justify-between starfield-bg relative select-none">
+
+  <!-- Pure CSS Starfield -->
+  <div class="starfield-container" aria-hidden="true">
+    <div class="stars-layer-1"></div>
+    <div class="stars-layer-2"></div>
+  </div>
+
+  <!-- Sticky Top Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-panel-solid/95 border-b border-border px-4 py-2.5 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <img src="/logo.svg" alt="Cosmic Hunt" class="w-5 h-5" />
+      <span id="nav-team-name" class="font-heading font-bold text-white tracking-wider text-sm uppercase">LOADING...</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <!-- Network Signal Indicator -->
+      <div id="signal-badge" class="flex items-center gap-1.5 text-[11px] font-mono text-success">
+        <span class="w-2 h-2 rounded-full bg-success"></span>
+        <span id="signal-text">ONLINE</span>
+      </div>
+
+      <!-- Audio Mute Toggle -->
+      <button id="btn-sound-toggle" class="text-text-muted hover:text-white p-1 rounded transition-colors" aria-label="Toggle Sound">
+        <!-- Sound Off Icon (Default) -->
+        <svg id="icon-sound-off" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
+        <!-- Sound On Icon -->
+        <svg id="icon-sound-on" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Network Offline Banner -->
+  <div id="offline-banner" class="bg-warn/90 text-bg text-xs font-mono font-bold px-4 py-1.5 text-center hidden relative z-40">
+    Signal lost. Reconnecting to telemetry...
+  </div>
+
+  <!-- Active Playing View (HUD) -->
+  <main id="view-game" class="w-full max-w-md mx-auto p-4 flex-1 flex flex-col justify-between space-y-4 relative z-10">
+
+    <!-- Timer and Progress Segment Section -->
+    <div class="bg-panel-solid border border-border p-4 rounded-sm text-center space-y-3">
+      <!-- High-Precision Millisecond Timer -->
+      <div class="space-y-1">
+        <div id="game-timer" class="font-mono text-4xl sm:text-5xl font-bold tracking-tight text-primary-light">
+          30:00.000
+        </div>
+        <div class="flex justify-center gap-8 font-mono text-[10px] tracking-widest text-text-muted">
+          <span>MIN</span>
+          <span>SEC</span>
+          <span>MS</span>
+        </div>
+      </div>
+
+      <!-- Progress Segments -->
+      <div class="space-y-1.5 pt-1 border-t border-border/80">
+        <div class="flex items-center justify-between text-xs font-mono text-text-muted">
+          <span id="progress-label" class="text-white font-bold tracking-wider">CLUE 1 OF 6</span>
+          <span id="progress-percent" class="text-primary-light">0% DECRYPTED</span>
+        </div>
+        <div class="grid grid-cols-6 gap-1.5 h-2" id="progress-segments">
+          <div class="seg rounded-sm bg-border"></div>
+          <div class="seg rounded-sm bg-border"></div>
+          <div class="seg rounded-sm bg-border"></div>
+          <div class="seg rounded-sm bg-border"></div>
+          <div class="seg rounded-sm bg-border"></div>
+          <div class="seg rounded-sm bg-border"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Clue Card -->
+    <div id="clue-card" class="bg-panel-solid border border-border p-5 rounded-sm space-y-3 frame-offset transition-all">
+      <div class="flex items-center justify-between">
+        <span id="clue-eyebrow" class="eyebrow">— WAYPOINT 01</span>
+        <span class="text-[11px] font-mono text-text-muted">STATUS: TRANSMITTING</span>
+      </div>
+
+      <div id="clue-text" class="text-lg text-white font-body leading-relaxed min-h-[90px] flex items-center">
+        Loading encrypted riddle...
+      </div>
+    </div>
+
+    <!-- Decrypt Code Entry Form -->
+    <div class="bg-panel-solid border border-border p-4 rounded-sm space-y-3">
+      <div class="space-y-1">
+        <label for="input-code" class="block font-mono text-xs font-bold text-primary-light tracking-wider">
+          DECRYPT:// ENTER SECRET CODE
+        </label>
+        <div class="relative">
+          <input
+            id="input-code"
+            type="text"
+            maxlength="9"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            placeholder="XXX-XXXX"
+            class="w-full bg-bg border border-border h-13 px-4 font-mono text-xl tracking-widest text-white uppercase focus:border-primary focus:outline-none rounded-sm transition-all"
+          />
+        </div>
+        <div id="code-feedback" class="text-xs font-mono hidden pt-1"></div>
+      </div>
+
+      <button id="btn-submit-code" class="btn-primary w-full h-14 text-base tracking-wider gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>SUBMIT CODE</span>
+      </button>
+    </div>
+
+    <!-- Solved Clues Collapsible Tray -->
+    <div class="border border-border rounded-sm bg-panel-solid text-xs">
+      <button id="toggle-solved" class="w-full p-3 flex items-center justify-between text-text-muted hover:text-white transition-colors">
+        <span id="solved-tray-label" class="font-mono font-bold tracking-wider">SOLVED CLUES (0)</span>
+        <svg id="solved-chevron" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </button>
+      <div id="solved-list" class="hidden p-3 border-t border-border space-y-2 bg-bg/50">
+        <div class="text-text-muted/60 text-center font-mono py-2">No clues solved yet</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAUSED OVERLAY -->
+  <div id="overlay-paused" class="fixed inset-0 z-50 bg-bg/90 backdrop-blur-md flex items-center justify-center p-6 hidden">
+    <div class="bg-panel-solid border border-border p-8 max-w-sm w-full text-center space-y-4 rounded frame-offset">
+      <div class="text-paused flex justify-center">
+        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <h2 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">GAME PAUSED</h2>
+      <div id="paused-timer" class="font-mono text-3xl font-bold text-paused">--:--.---</div>
+      <p class="text-sm text-text-muted">
+        The mission is temporarily paused by the organizers. Your clock is frozen and will resume automatically.
+      </p>
+    </div>
+  </div>
+
+  <!-- WAITING VIEW (NOT STARTED) -->
+  <div id="view-waiting" class="w-full max-w-md mx-auto my-auto p-6 space-y-6 text-center relative z-10 hidden">
+    <div class="bg-panel-solid border border-border p-8 rounded space-y-6 frame-offset">
+      <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
+        <span class="absolute inset-0 rounded-full border-2 border-primary-light animate-ping opacity-40"></span>
+        <div class="w-14 h-14 rounded-full bg-primary/20 border border-primary-light flex items-center justify-center text-primary-light">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="eyebrow">— STANDBY STATUS</div>
+        <h2 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">MISSION NOT STARTED</h2>
+      </div>
+
+      <p class="text-sm text-text-muted leading-relaxed">
+        Stay at the reporting desk. Your 30-minute clock begins the moment the organizers start your team.
+      </p>
+
+      <div class="p-3 bg-bg border border-border rounded font-mono text-xs text-primary-light flex items-center justify-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary-light animate-pulse"></span>
+        LISTENING FOR LAUNCH SIGNAL...
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETED VIEW -->
+  <div id="view-completed" class="w-full max-w-md mx-auto my-auto p-6 space-y-6 text-center relative z-10 hidden">
+    <div class="bg-panel-solid border border-success/40 p-8 rounded space-y-6 frame-offset">
+      <div class="w-16 h-16 rounded-full bg-success/20 border border-success mx-auto flex items-center justify-center text-success">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      </div>
+
+      <div class="space-y-2">
+        <div class="eyebrow text-success">— ALL WAYPOINTS DECRYPTED</div>
+        <h2 class="text-3xl font-heading font-bold text-white uppercase tracking-wider">MISSION COMPLETE</h2>
+      </div>
+
+      <div class="bg-bg border border-border p-4 rounded space-y-2">
+        <div class="text-xs text-text-muted uppercase font-mono tracking-wider">TOTAL MISSION TIME</div>
+        <div id="completed-time" class="font-mono text-3xl font-bold text-success">--:--.---</div>
+        <div class="text-xs text-text-muted font-mono">CLUES SOLVED: 6 OF 6</div>
+      </div>
+
+      <p class="text-sm text-text-muted leading-relaxed">
+        Congratulations! All campus codes successfully verified. Official rankings and awards will be revealed on the Leaderboard by the organizers.
+      </p>
+
+      <a href="/leaderboard" class="btn-primary w-full gap-2">
+        VIEW LEADERBOARD
+      </a>
+    </div>
+  </div>
+
+  <!-- TIME UP VIEW -->
+  <div id="view-timeup" class="w-full max-w-md mx-auto my-auto p-6 space-y-6 text-center relative z-10 hidden">
+    <div class="bg-panel-solid border border-warn/40 p-8 rounded space-y-6 frame-offset">
+      <div class="w-16 h-16 rounded-full bg-warn/20 border border-warn mx-auto flex items-center justify-center text-warn">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+
+      <div class="space-y-2">
+        <div class="eyebrow text-warn">— CHRONO LIMIT REACHED</div>
+        <h2 class="text-3xl font-heading font-bold text-white uppercase tracking-wider">TIME'S UP</h2>
+      </div>
+
+      <div class="bg-bg border border-border p-4 rounded font-mono text-sm space-y-1">
+        <div class="text-text-muted">FINAL MISSION SCORE</div>
+        <div id="timeup-solved" class="text-xl font-bold text-white">CLUES SOLVED: - OF 6</div>
+      </div>
+
+      <p class="text-sm text-text-muted leading-relaxed">
+        Your 30-minute mission window has expired. Please return to the organizers at the reporting desk.
+      </p>
+    </div>
+  </div>
+
+  <!-- DISQUALIFIED VIEW -->
+  <div id="view-disqualified" class="w-full max-w-md mx-auto my-auto p-6 space-y-6 text-center relative z-10 hidden">
+    <div class="bg-panel-solid border border-danger/40 p-8 rounded space-y-6 frame-offset">
+      <div class="w-16 h-16 rounded-full bg-danger/20 border border-danger mx-auto flex items-center justify-center text-danger">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+      </div>
+
+      <div class="space-y-2">
+        <div class="eyebrow text-danger">— DIRECTIVE BREACH</div>
+        <h2 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">DISQUALIFIED</h2>
+      </div>
+
+      <p class="text-sm text-text-muted leading-relaxed">
+        This team has been disqualified by mission control. Please return to the organizers immediately.
+      </p>
+    </div>
+  </div>
+
+  <!-- SIGNED OUT VIEW -->
+  <div id="view-signedout" class="w-full max-w-md mx-auto my-auto p-6 space-y-6 text-center relative z-10 hidden">
+    <div class="bg-panel-solid border border-border p-8 rounded space-y-6 frame-offset">
+      <div class="w-16 h-16 rounded-full bg-border mx-auto flex items-center justify-center text-text-muted">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      </div>
+
+      <h2 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">SIGNED OUT</h2>
+      <p class="text-sm text-text-muted leading-relaxed">
+        This team is now active on another device.
+      </p>
+
+      <a href="/login" class="btn-primary w-full">LOG IN AGAIN</a>
+    </div>
+  </div>
+
+  <!-- MISSION ENDED / STOPPED VIEW -->
+  <div id="view-stopped" class="w-full max-w-md mx-auto my-auto p-6 space-y-6 text-center relative z-10 hidden">
+    <div class="bg-panel-solid border border-border p-8 rounded space-y-6 frame-offset">
+      <h2 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">MISSION ENDED</h2>
+      <p class="text-sm text-text-muted leading-relaxed">
+        The organizers have ended the mission. Please return to the reporting desk.
+      </p>
+      <div id="stopped-solved" class="p-3 bg-bg border border-border font-mono text-sm text-white">
+        Clues Solved: 0 of 6
+      </div>
+      <a href="/leaderboard" class="btn-secondary w-full">
+        VIEW LEADERBOARD
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom Bar with Team Info -->
+  <footer class="p-3 text-center text-[10px] text-text-muted/60 font-mono relative z-10">
+    COSMIC HUNT // NMF COLLEGE
+  </footer>
+
+  <script type="module" src="/src/js/play.js"></script>
+</body>
+</html>
+

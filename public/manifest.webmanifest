@@ -1,0 +1,17 @@
+{
+  "name": "COSMIC HUNT",
+  "short_name": "COSMIC HUNT",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03060F",
+  "theme_color": "#03060F",
+  "description": "Decode the campus. Reach the stars. Treasure Hunt at Nirmala Memorial Foundation College.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+

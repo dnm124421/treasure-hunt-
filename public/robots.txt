@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /play
+Disallow: /api/
+Allow: /
+Allow: /login
+Allow: /leaderboard
+

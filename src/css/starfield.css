@@ -1,0 +1,83 @@
+/* Deep Space Starfield - Pure CSS per Section 10.6 */
+.starfield-bg {
+  background-color: #03060F;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(13, 27, 56, 0.4) 0%, #03060F 75%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.starfield-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.stars-layer-1, .stars-layer-2, .stars-layer-3 {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-repeat: repeat;
+}
+
+/* Small distant stars */
+.stars-layer-1 {
+  background-image: 
+    radial-gradient(1px 1px at 25px 35px, #DFE2F1, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 85px 120px, #7CC4FF, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 150px 70px, #FFFFFF, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 220px 190px, #DFE2F1, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 310px 80px, #4DA3E8, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 420px 240px, #DFE2F1, rgba(0,0,0,0));
+  background-size: 450px 450px;
+  animation: stars-drift-1 90s linear infinite;
+  opacity: 0.65;
+}
+
+/* Mid-depth twinkling stars */
+.stars-layer-2 {
+  background-image: 
+    radial-gradient(2px 2px at 60px 80px, #7CC4FF, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 180px 220px, #FFFFFF, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 290px 140px, #DFE2F1, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 390px 310px, #7CC4FF, rgba(0,0,0,0));
+  background-size: 550px 550px;
+  animation: stars-drift-2 60s linear infinite;
+  opacity: 0.8;
+}
+
+/* Bright foreground celestial beacons */
+.stars-layer-3 {
+  background-image: 
+    radial-gradient(2.5px 2.5px at 120px 160px, #FFFFFF, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 340px 90px, #7CC4FF, rgba(0,0,0,0)),
+    radial-gradient(3px 3px at 480px 280px, #4DA3E8, rgba(0,0,0,0));
+  background-size: 650px 650px;
+  animation: stars-drift-3 45s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes stars-drift-1 {
+  from { transform: translateY(0); }
+  to { transform: translateY(-450px); }
+}
+
+@keyframes stars-drift-2 {
+  from { transform: translateY(0) rotate(0.5deg); }
+  to { transform: translateY(-550px) rotate(-0.5deg); }
+}
+
+@keyframes stars-drift-3 {
+  from { transform: translateY(0); }
+  to { transform: translateY(-650px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars-layer-1, .stars-layer-2, .stars-layer-3 {
+    animation: none;
+  }
+}
+
