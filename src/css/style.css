@@ -7,8 +7,12 @@
 @import "./components.css";
 
 /* Base font settings and defaults */
-html, body {
+html {
   background-color: #03060F;
+}
+
+body {
+  background-color: transparent;
   color: #DFE2F1;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   margin: 0;
@@ -32,4 +36,3 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #4DA3E8;
 }
-

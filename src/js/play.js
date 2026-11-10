@@ -93,15 +93,30 @@ btnSoundToggle.addEventListener('click', () => {
   }
 });
 
-// Timer Instance
+// Timer Instance and Warnings (G4)
+let warned5m = false;
+let warned1m = false;
+
 const timer = new CountdownTimer({
-  onTick: ({ formatted, colorClass, pulseClass, frozen }) => {
+  onTick: ({ ms, formatted, colorClass, pulseClass, frozen }) => {
     if (gameTimerEl) {
       gameTimerEl.textContent = formatted.full;
       gameTimerEl.className = `font-mono text-4xl sm:text-5xl font-bold tracking-tight ${colorClass} ${pulseClass}`;
     }
     if (frozen && pausedTimerEl) {
       pausedTimerEl.textContent = formatted.full;
+    }
+
+    // Time warning toasts (G4)
+    if (!frozen && ms > 0) {
+      if (ms <= 300000 && ms > 295000 && !warned5m) {
+        warned5m = true;
+        showToast('⚠️ 5 minutes remaining!', 'warn');
+      }
+      if (ms <= 60000 && ms > 55000 && !warned1m) {
+        warned1m = true;
+        showToast('🔴 1 minute remaining!', 'danger');
+      }
     }
   },
   onExpire: () => {
@@ -381,4 +396,86 @@ document.addEventListener('visibilitychange', () => {
     fetchState();
   }
 });
+
+// Toast System (X1)
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+
+  const colors = {
+    info: 'bg-primary/90 text-white',
+    warn: 'bg-warn/90 text-bg',
+    danger: 'bg-danger/90 text-white',
+    success: 'bg-success/90 text-bg'
+  };
+
+  const toast = document.createElement('div');
+  toast.className = `${colors[type] || colors.info} px-4 py-2.5 rounded-sm text-xs font-mono font-bold text-center pointer-events-auto shadow-lg transition-all duration-300`;
+  toast.textContent = message;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(-8px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+// Paste and Clear buttons (G2)
+const btnPaste = document.getElementById('btn-paste');
+const btnClear = document.getElementById('btn-clear');
+
+if (btnPaste) {
+  btnPaste.addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      let val = text.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (val.length > 3) val = val.slice(0, 3) + '-' + val.slice(3, 7);
+      inputCode.value = val;
+      sessionStorage.setItem(DRAFT_KEY, val);
+      hideFeedback();
+      if (btnClear) btnClear.classList.remove('hidden');
+      inputCode.focus();
+    } catch {
+      showFeedback('Clipboard access denied. Please type your code.');
+    }
+  });
+}
+
+if (btnClear) {
+  if (inputCode.value.trim()) {
+    btnClear.classList.remove('hidden');
+  }
+
+  inputCode.addEventListener('input', () => {
+    if (inputCode.value.trim()) {
+      btnClear.classList.remove('hidden');
+    } else {
+      btnClear.classList.add('hidden');
+    }
+  });
+
+  btnClear.addEventListener('click', () => {
+    inputCode.value = '';
+    sessionStorage.removeItem(DRAFT_KEY);
+    hideFeedback();
+    btnClear.classList.add('hidden');
+    inputCode.focus();
+  });
+}
+
+// Mobile keyboard visualViewport adaptation (G1)
+if (window.visualViewport) {
+  const onViewportResize = () => {
+    const vv = window.visualViewport;
+    const diff = window.innerHeight - vv.height;
+    if (diff > 120) {
+      document.body.style.paddingBottom = `${diff}px`;
+      inputCode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      document.body.style.paddingBottom = '';
+    }
+  };
+  window.visualViewport.addEventListener('resize', onViewportResize);
+}
 

@@ -174,6 +174,17 @@ async function runTests() {
     assert(data.revealed === true && Array.isArray(data.teams) && data.teams.length > 0 && data.teams[0].name === 'Nebula-9', 'Test 12: Leaderboard reveal publishes ranked teams with Nebula-9 on top');
   }
 
+  // Test 13: Admin trigger code detection (DHRUV7) returns admin flag and masked email
+  {
+    const res = await loginHandler({
+      httpMethod: 'POST',
+      headers: { 'client-ip': '1.2.3.4' },
+      body: JSON.stringify({ code: 'DHRUV7' })
+    });
+    const data = JSON.parse(res.body);
+    assert(data.ok === true && data.admin === true && typeof data.adminEmail === 'string' && data.adminEmail.includes('@'), 'Test 13: Admin trigger code returns admin flag and masked email');
+  }
+
   console.log(`\n================================`);
   console.log(`RESULTS: ${passed} PASSED, ${failed} FAILED`);
   console.log(`================================`);

@@ -10,14 +10,52 @@ const lockedStatusText = document.getElementById('locked-status-text');
 const rankedTbody = document.getElementById('ranked-tbody');
 const btnFullscreen = document.getElementById('btn-fullscreen');
 
+let wasLocked = true;
+let ceremonyInProgress = false;
+
 // Fullscreen Projector Toggle
-btnFullscreen.addEventListener('click', () => {
+function toggleFullscreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen().catch(err => {
       console.warn('Fullscreen request failed:', err);
     });
   } else {
     document.exitFullscreen().catch(() => {});
+  }
+}
+
+if (btnFullscreen) {
+  btnFullscreen.addEventListener('click', toggleFullscreen);
+}
+
+// F key shortcut for Fullscreen (FIX-05)
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'f' || e.key === 'F') {
+    if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+    toggleFullscreen();
+  }
+});
+
+// Cursor autohide in fullscreen (UX-B2)
+let cursorTimer = null;
+function resetCursorHide() {
+  document.body.style.cursor = '';
+  clearTimeout(cursorTimer);
+  cursorTimer = setTimeout(() => {
+    if (document.fullscreenElement) {
+      document.body.style.cursor = 'none';
+    }
+  }, 3000);
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) {
+    document.body.style.cursor = 'none';
+    document.addEventListener('mousemove', resetCursorHide);
+  } else {
+    document.body.style.cursor = '';
+    clearTimeout(cursorTimer);
+    document.removeEventListener('mousemove', resetCursorHide);
   }
 });
 
@@ -36,10 +74,10 @@ function renderLocked(data) {
       lockedStatusText.textContent = 'LIVE';
     } else if (status === 'stopped') {
       lockedStatusPill.classList.add('status-completed');
-      lockedStatusText.textContent = 'STOPPED';
+      lockedStatusText.textContent = 'ENDED';
     } else {
       lockedStatusPill.classList.add('status-waiting');
-      lockedStatusText.textContent = 'SETUP';
+      lockedStatusText.textContent = 'NOT STARTED';
     }
   }
 }
@@ -111,14 +149,55 @@ function renderRevealed(data) {
   }).join('');
 }
 
+// Reveal ceremony countdown (UX-B1)
+function showRevealCeremony(callback) {
+  ceremonyInProgress = true;
+  stateLocked.classList.add('hidden');
+  stateRevealed.classList.add('hidden');
+
+  const ceremony = document.createElement('div');
+  ceremony.className = 'fixed inset-0 z-50 bg-bg/95 backdrop-blur-md flex items-center justify-center';
+  ceremony.innerHTML = `
+    <div class="text-center space-y-4">
+      <div class="font-mono text-sm text-primary-light tracking-widest animate-pulse">DECRYPTING RESULTS...</div>
+      <div id="ceremony-countdown" class="font-mono text-7xl font-bold text-white">3</div>
+    </div>
+  `;
+  document.body.appendChild(ceremony);
+
+  const countEl = ceremony.querySelector('#ceremony-countdown');
+  let count = 3;
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
+      countEl.textContent = count;
+    } else {
+      clearInterval(interval);
+      ceremony.style.opacity = '0';
+      ceremony.style.transition = 'opacity 0.4s ease';
+      setTimeout(() => {
+        ceremony.remove();
+        ceremonyInProgress = false;
+        callback();
+      }, 400);
+    }
+  }, 1000);
+}
+
 async function fetchLeaderboard() {
-  if (document.hidden) return; // Pause polling when tab is hidden
+  if (document.hidden || ceremonyInProgress) return;
   try {
     const res = await api.getLeaderboard();
     if (res.ok && res.data) {
       if (res.data.revealed) {
-        renderRevealed(res.data);
+        if (wasLocked) {
+          wasLocked = false;
+          showRevealCeremony(() => renderRevealed(res.data));
+        } else {
+          renderRevealed(res.data);
+        }
       } else {
+        wasLocked = true;
         renderLocked(res.data);
       }
     }
@@ -129,4 +208,3 @@ async function fetchLeaderboard() {
 
 fetchLeaderboard();
 setInterval(fetchLeaderboard, 5000);
-

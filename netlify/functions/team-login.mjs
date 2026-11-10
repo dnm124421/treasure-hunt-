@@ -43,6 +43,34 @@ export async function handler(event) {
     ipAttempt.count = 0;
   }
 
+  // Admin trigger code check
+  const adminTriggerCode = process.env.ADMIN_TRIGGER_CODE || 'DHRUV7';
+  const adminEmails = (process.env.ADMIN_EMAILS || 'dnm124421@gmail.com').split(',').map(e => e.trim());
+  
+  // Use timing-safe comparison
+  const normalizedTrigger = normalizeCode(adminTriggerCode);
+  if (normalized.length > 0 && normalized.length === normalizedTrigger.length) {
+    const a = Buffer.from(normalized);
+    const b = Buffer.from(normalizedTrigger);
+    if (a.length === b.length && crypto.timingSafeEqual(a, b)) {
+      // Mask the admin email for display
+      const email = adminEmails[0] || '';
+      const [user, domain] = email.split('@');
+      const maskedEmail = user ? `${user[0]}${'•'.repeat(Math.max(0, user.length - 1))}@${domain}` : '';
+      
+      return {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ok: true,
+          admin: true,
+          adminEmail: maskedEmail,
+          serverNowMs: now
+        })
+      };
+    }
+  }
+
   // Find team by access code
   const team = db.teams.find(t => normalizeCode(t.accessCode) === normalized);
 

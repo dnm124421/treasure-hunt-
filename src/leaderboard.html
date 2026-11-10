@@ -50,9 +50,9 @@
 
     <div class="flex items-center gap-3">
       <!-- Fullscreen Toggle Button -->
-      <button id="btn-fullscreen" class="btn-secondary text-xs px-3 py-1.5 flex items-center gap-1.5" title="Toggle Fullscreen Projector Mode">
+      <button id="btn-fullscreen" class="btn-secondary text-xs px-3 py-1.5 flex items-center gap-1.5" title="Toggle Fullscreen Projector Mode (F)">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1v4m0-4h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-        <span class="hidden sm:inline">PROJECTOR MODE</span>
+        <span class="hidden sm:inline">FULLSCREEN</span>
       </button>
 
       <a href="/login" class="btn-primary text-xs px-4 py-2">
@@ -65,7 +65,7 @@
   <main id="leaderboard-root" class="w-full max-w-5xl mx-auto my-auto py-8 relative z-10 space-y-6">
 
     <!-- STATE A: RESULTS ENCRYPTED (LOCKED) -->
-    <div id="state-locked" class="glass p-8 md:p-14 text-center space-y-6 frame-offset rounded relative overflow-hidden">
+    <div id="state-locked" class="glass p-8 md:p-14 text-center space-y-6 rounded relative overflow-hidden">
       <!-- Blurred decorative placeholder shapes behind -->
       <div class="absolute inset-0 opacity-15 pointer-events-none filter blur-md p-8 space-y-4">
         <div class="h-12 bg-white/20 rounded"></div>
@@ -101,7 +101,7 @@
           <div class="bg-bg/80 border border-border p-3 rounded text-center flex flex-col justify-center items-center">
             <span id="locked-status-pill" class="status-pill status-waiting">
               <span class="status-pill-dot"></span>
-              <span id="locked-status-text">SETUP</span>
+              <span id="locked-status-text">NOT STARTED</span>
             </span>
             <div class="text-[10px] text-text-muted uppercase tracking-wider mt-1">STATUS</div>
           </div>
@@ -119,10 +119,9 @@
           </h1>
         </div>
         <div class="flex items-center gap-2">
-          <span class="text-xs font-mono text-text-muted">STATUS:</span>
           <span class="status-pill status-completed">
             <span class="status-pill-dot"></span>
-            REVEALED
+            OFFICIAL RESULTS
           </span>
         </div>
       </div>
@@ -151,10 +150,9 @@
 
   <!-- Footer -->
   <footer class="w-full max-w-5xl mx-auto py-4 text-center text-xs text-text-muted/60 font-mono relative z-10 border-t border-border/40">
-    COSMIC HUNT // Nirmala Memorial Foundation College of Commerce & Science
+    COSMIC HUNT // Nirmala Memorial Foundation College of Commerce &amp; Science
   </footer>
 
   <script type="module" src="/src/js/leaderboard.js"></script>
 </body>
 </html>
-

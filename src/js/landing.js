@@ -1,6 +1,7 @@
 import { api } from './api.js';
+import { EVENT } from './content.js';
 
-let eventDateMs = new Date('2026-11-27T10:00:00+05:30').getTime();
+let eventDateMs = new Date(EVENT.dateIso).getTime();
 let eventStatus = 'setup';
 
 function updateCountdown() {
@@ -64,10 +65,28 @@ async function loadConfig() {
   }
 }
 
-// Low data and video pause
-if (navigator.connection && navigator.connection.saveData) {
-  const video = document.querySelector('.hero-video');
-  if (video) video.pause();
+// Background Video Controller (FIX-01)
+const v = document.getElementById('heroVideo');
+if (v) {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (reduce || saveData) {
+    v.removeAttribute('autoplay');
+    v.pause();
+    v.preload = 'none';
+  } else {
+    v.muted = true;
+    v.play().catch(() => {
+      window.addEventListener('pointerdown', () => v.play(), { once: true });
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        v.pause();
+      } else {
+        v.play().catch(() => {});
+      }
+    });
+  }
 }
 
 // Initial calls
@@ -75,4 +94,3 @@ loadConfig();
 updateCountdown();
 setInterval(updateCountdown, 1000);
 setInterval(loadConfig, 30000);
-

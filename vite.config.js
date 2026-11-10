@@ -95,7 +95,7 @@ function cosmicPlugin() {
       const dist = resolve(__dirname, 'dist');
       const distSrc = resolve(dist, 'src');
       if (fs.existsSync(distSrc)) {
-        const files = ['login.html', 'play.html', 'leaderboard.html'];
+        const files = ['login.html', 'play.html', 'leaderboard.html', '404.html'];
         files.forEach(f => {
           const srcFile = resolve(distSrc, f);
           const destFile = resolve(dist, f);
@@ -127,7 +127,8 @@ export default defineConfig({
         play: resolve(__dirname, 'src/play.html'),
         leaderboard: resolve(__dirname, 'src/leaderboard.html'),
         admin: resolve(__dirname, 'src/ops-x7q/index.html'),
-        adminManage: resolve(__dirname, 'src/ops-x7q/manage.html')
+        adminManage: resolve(__dirname, 'src/ops-x7q/manage.html'),
+        notFound: resolve(__dirname, 'src/404.html')
       }
     }
   }

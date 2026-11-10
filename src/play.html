@@ -58,7 +58,7 @@
 
   <!-- Network Offline Banner -->
   <div id="offline-banner" class="bg-warn/90 text-bg text-xs font-mono font-bold px-4 py-1.5 text-center hidden relative z-40">
-    Signal lost. Reconnecting to telemetry...
+    Signal lost. Reconnecting...
   </div>
 
   <!-- Active Playing View (HUD) -->
@@ -113,7 +113,7 @@
         <label for="input-code" class="block font-mono text-xs font-bold text-primary-light tracking-wider">
           DECRYPT:// ENTER SECRET CODE
         </label>
-        <div class="relative">
+        <div class="relative flex items-center gap-2">
           <input
             id="input-code"
             type="text"
@@ -124,6 +124,12 @@
             placeholder="XXX-XXXX"
             class="w-full bg-bg border border-border h-13 px-4 font-mono text-xl tracking-widest text-white uppercase focus:border-primary focus:outline-none rounded-sm transition-all"
           />
+          <button id="btn-paste" type="button" class="shrink-0 p-2 text-text-muted hover:text-primary-light transition-colors" title="Paste from clipboard" aria-label="Paste">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </button>
+          <button id="btn-clear" type="button" class="shrink-0 p-2 text-text-muted hover:text-danger transition-colors hidden" title="Clear" aria-label="Clear input">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
         </div>
         <div id="code-feedback" class="text-xs font-mono hidden pt-1"></div>
       </div>
@@ -291,6 +297,9 @@
   <footer class="p-3 text-center text-[10px] text-text-muted/60 font-mono relative z-10">
     COSMIC HUNT // NMF COLLEGE
   </footer>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 space-y-2 pointer-events-none w-full max-w-sm px-4"></div>
 
   <script type="module" src="/src/js/play.js"></script>
 </body>

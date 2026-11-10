@@ -32,9 +32,9 @@
     </a>
   </header>
 
-  <!-- Login Card -->
+  <!-- Login Card Container -->
   <main class="w-full max-w-md mx-auto my-auto py-6 relative z-10">
-    <div class="bg-panel-solid border border-border p-6 md:p-8 space-y-6 frame-offset rounded-sm" id="login-card">
+    <div class="glass p-6 md:p-8 space-y-6 rounded-sm" id="login-card">
       <div class="space-y-2">
         <div class="eyebrow flex items-center gap-2">
           <span class="w-1.5 h-1.5 rounded-full bg-primary-light"></span>
@@ -100,22 +100,69 @@
           <ol class="list-decimal list-inside space-y-1">
             <li>Each team has exactly 4 players.</li>
             <li>The game is played inside the college premises only.</li>
-            <li>Teams must report 1 hour before game starts.</li>
+            <li>Teams must report 1 hour before their game starts.</li>
             <li>Each team gets 30 minutes of play time.</li>
-            <li>Phones used for outside help lead to disqualification.</li>
+            <li>Phones used for outside help, or any unfair means, lead to disqualification. (A phone may be used only to open this website.)</li>
             <li>No cross-teaming and no outside help.</li>
-            <li>Cheating or misbehaviour leads to disqualification.</li>
-            <li>Match timing is not changed once started.</li>
+            <li>Cheating, disrespect or misbehaviour leads to disqualification.</li>
+            <li>Match timing is not changed once the team has started.</li>
             <li>The organizers' decision is final.</li>
           </ol>
         </div>
       </div>
     </div>
+
+    <!-- Admin Verification Card (FIX-03 Hidden Admin Gate) -->
+    <div id="admin-card" class="glass p-6 md:p-8 space-y-6 rounded-sm hidden">
+      <div class="space-y-2">
+        <div class="eyebrow flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-danger animate-pulse"></span>
+          — ADMIN VERIFICATION
+        </div>
+        <h1 class="text-2xl font-heading font-bold text-white uppercase tracking-wider">
+          COMMAND CENTER ACCESS
+        </h1>
+      </div>
+
+      <div class="flex items-start gap-3 p-3 bg-bg/80 border border-border/80 rounded-sm text-xs text-text-muted">
+        <svg class="w-4 h-4 text-warn shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        <span>Signing in as <strong id="admin-email-display" class="text-white">—</strong></span>
+      </div>
+
+      <div class="space-y-2">
+        <label for="admin-password" class="block font-mono text-xs font-bold text-primary-light tracking-wider">
+          ENTER PASSWORD
+        </label>
+        <div class="relative">
+          <input
+            id="admin-password"
+            type="password"
+            autocomplete="current-password"
+            class="w-full bg-bg border border-border h-13 px-4 pr-12 font-mono text-lg text-white focus:border-primary focus:outline-none rounded-sm transition-all"
+            placeholder="••••••••"
+          />
+          <button id="btn-toggle-pwd" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-white transition-colors p-1" aria-label="Show password">
+            <svg id="icon-eye-off" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.59 6.59m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+            <svg id="icon-eye-on" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          </button>
+        </div>
+        <div id="admin-error" class="text-xs font-mono text-danger hidden"></div>
+      </div>
+
+      <button id="btn-admin-login" class="btn-primary w-full gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        <span>VERIFY &amp; ENTER</span>
+      </button>
+
+      <button id="btn-admin-back" class="w-full text-center text-xs text-text-muted hover:text-white transition-colors font-mono py-2">
+        ← BACK TO TEAM LOGIN
+      </button>
+    </div>
   </main>
 
   <!-- Device Switch Confirmation Modal -->
   <div id="conflict-modal" class="fixed inset-0 z-50 bg-bg/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-panel-solid border border-border p-6 max-w-sm w-full space-y-4 rounded frame-offset">
+    <div class="glass p-6 max-w-sm w-full space-y-4 rounded">
       <div class="flex items-center gap-3 text-warn">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
         <h3 class="font-heading font-bold text-white uppercase text-lg">Active Device Detected</h3>
@@ -132,10 +179,9 @@
 
   <!-- Footer -->
   <footer class="w-full max-w-md mx-auto pb-4 text-center text-[11px] text-text-muted/60 font-mono relative z-10">
-    Nirmala Memorial Foundation College of Commerce & Science
+    Nirmala Memorial Foundation College of Commerce &amp; Science
   </footer>
 
   <script type="module" src="/src/js/login.js"></script>
 </body>
 </html>
-

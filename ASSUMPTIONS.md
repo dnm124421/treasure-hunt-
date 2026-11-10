@@ -32,3 +32,18 @@ This document records architectural decisions, assumptions, and configuration de
 - Respects `prefers-reduced-motion` and `navigator.connection.saveData` by falling back to a still poster and pure CSS starfield.
 - Game HUD uses battery-efficient pure CSS starfield without canvas or backdrop-filter blur.
 
+
+
+## 7. Fix & Upgrade Pass (P0, P1, P2) Decisions
+- **FIX-01 Video Layer Architecture**: Rebuilt with `.video-stage` fixed background layer with high-definition center column masking (`@media (min-aspect-ratio: 1/1)`) for landscape/desktop displays, and blurred background fallback poster (`/hero-poster.webp`) generated from video hues.
+- **FIX-02 Glass Aesthetics**: Rebuilt `.glass` utility with 14px blur, saturation boost, inset specular highlights, gradient borders, and light-sweep animations. Applied universally across landing cards, hero, navigation, directives, and modals while removing obsolete `frame-offset` and solid backgrounds.
+- **FIX-03 Hidden Admin Gate**: Integrated two-step authentication into the public team login screen (`/login`). Entering the secret trigger code (default `DHRUV7` or configured `ADMIN_TRIGGER_CODE`) verifies against the server using timing-safe comparison and reveals an in-place Admin Verification card displaying the masked email. Firebase Auth SDK is lazy-loaded on demand to ensure zero payload impact on student team devices (< 120 KB gzipped budget preserved).
+- **FIX-04 Copy Standardization**: Centralized all event copy, 9 official directives, step descriptions, and error strings into `src/js/content.js`. Corrected student-facing terminology across all sections.
+- **FIX-05 Leaderboard Encrypted Vault**: Hardened hidden state against content leakage. When results are locked (`revealed: false`), table markup is completely omitted. Standardized telemetry status badges (`NOT STARTED`, `LIVE`, `ENDED`) and added Fullscreen mode with `F` key shortcut and 3-second cursor autohide.
+- **UX Upgrades**:
+  - `UX-B1`: 3-second animated "DECRYPTING RESULTS..." countdown ceremony when leaderboard is first revealed.
+  - `UX-T1 & T2`: 250ms auto-submission on 6th character input in team code boxes.
+  - `UX-G1`: Virtual keyboard awareness via `visualViewport` API with automatic smooth scrolling.
+  - `UX-G2`: Quick-paste and clear buttons on mission riddle code input.
+  - `UX-G4 & X1`: Dynamic toast notification system for time warnings (5 minutes and 1 minute remaining) and system alerts.
+  - `UX-X2`: Cosmic 404 page ("LOST IN SPACE") integrated into Vite build and Netlify redirects.
